@@ -1,0 +1,31 @@
+/* 
+DIAGNÓSTICO DEL DASHBOARD - Almacenes no se muestran
+
+PASOS:
+
+1. Abre la aplicación y ve a Dashboard
+2. Abre Developer Tools (F12) > Console
+3. Copia y pega esto en la consola:
+
+*/
+
+// Test 1: Ver los logs recientes
+console.clear();
+console.log('%c=== DIAGNÓSTICO ALMACENES DASHBOARD ===', 'font-size: 16px; font-weight: bold; color: blue;');
+
+// Test 2: Verificar si hay almacenes en el estado global
+// (Este test depende de cómo esté configurado el logger en tu app)
+
+// ESPERADO:
+// - Dashboard warehouses status debería mostrar effectiveWarehouses.length > 0
+// - Si está 0, el problema es:
+//   1. No hay datos en Supabase (warehouses vacío)
+//   2. Hay error RLS bloqueando la lectura
+//   3. El hook no se está ejecutando
+
+console.log('%c✓ Verifica en Network si hay peticiones a /rest/v1/warehouses', 'color: green');
+console.log('%c✓ Si hay error 403, es un problema de RLS', 'color: orange');
+console.log('%c✓ Si no hay petición, el hook no se disparó', 'color: red');
+
+// En App.tsx, verifica que warehouses.length sea > 0
+console.log('%c✓ Props warehouses debería tener datos al renderizar Dashboard', 'color: green');

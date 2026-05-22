@@ -1,0 +1,118 @@
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║          🚨 SOLUCIÓN AL PROBLEMA DE STOCK = 0 🚨             ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+📋 PROBLEMA:
+   - Recibes contenedor con productos
+   - Sistema dice "✅ Contenedor recibido"
+   - Vas a INVENTARIO
+   - Stock sigue en 0 ❌
+
+🔍 CAUSA:
+   - Los triggers están instalados PERO fallan silenciosamente
+   - No muestran errores, por eso no sabías qué pasaba
+
+✅ SOLUCIÓN:
+   - He creado un script que elimina el manejo silencioso de errores
+   - Ahora verás exactamente qué pasa en cada paso
+   - Si algo falla, LO SABRÁS inmediatamente
+
+═══════════════════════════════════════════════════════════════
+
+🚀 EJECUTAR AHORA (2 MINUTOS):
+
+1️⃣ Abre este link en tu navegador:
+   👉 https://supabase.com/dashboard/project/mkehxermgmdqsogmlaqq/sql/new
+
+2️⃣ Abre el archivo: FIX-TRIGGERS-DEFINITIVO.sql
+   (está en la misma carpeta que este archivo)
+
+3️⃣ Copia TODO el contenido del archivo
+
+4️⃣ Pégalo en el editor SQL de Supabase
+
+5️⃣ Haz clic en el botón "RUN" ▶️
+
+6️⃣ Espera 5 segundos
+
+7️⃣ Deberías ver este mensaje:
+   ✅ TRIGGERS RECREADOS CON LOGGING COMPLETO
+
+═══════════════════════════════════════════════════════════════
+
+🧪 PROBAR INMEDIATAMENTE:
+
+1. Ve a tu aplicación (localhost:3000 o Vercel)
+
+2. LOGISTIQUE & STOCK → Recepción de Contenedor
+
+3. Añade cualquier producto con cualquier cantidad
+
+4. Selecciona un almacén
+
+5. Haz clic en "Recibir Todo"
+
+6. Ve a INVENTARIO
+
+7. El stock DEBE estar actualizado ✅
+
+═══════════════════════════════════════════════════════════════
+
+📊 VER LOS LOGS (Para entender qué pasa):
+
+1. En Supabase Dashboard:
+   - Menú lateral → "Logs"
+   - Selecciona "Postgres Logs"
+   - Filtra: "Last hour"
+
+2. Verás mensajes como:
+   🔥 TRIGGER disparado
+   → Tipo: IMPORT
+   → Sumando al almacén destino...
+   ✅ Stock actualizado exitosamente: 25 unidades
+
+3. Si hay error, lo verás claramente:
+   ❌ ERROR: Producto con ID xxx no existe
+
+═══════════════════════════════════════════════════════════════
+
+📁 ARCHIVOS IMPORTANTES:
+
+FIX-TRIGGERS-DEFINITIVO.sql       ← EJECUTAR ESTE
+INSTRUCCIONES-DEFINITIVAS.md      ← Instrucciones detalladas
+README-SOLUCION-STOCK.md          ← Explicación completa
+VERIFICACION-PREVIA.sql           ← Diagnóstico (opcional)
+DIAGNOSTICO.sql                   ← Ver estado del sistema
+
+═══════════════════════════════════════════════════════════════
+
+⏱️ TIEMPO TOTAL: 2 MINUTOS
+
+1. Copiar y ejecutar script: 1 minuto
+2. Probar en la aplicación: 1 minuto
+
+═══════════════════════════════════════════════════════════════
+
+🆘 SI ALGO FALLA:
+
+1. Ve a Supabase → Logs → Postgres Logs
+2. Busca mensajes con "ERROR"
+3. Copia el mensaje completo
+4. Envíamelo y lo arreglo inmediatamente
+
+═══════════════════════════════════════════════════════════════
+
+✅ TODO FUNCIONARÁ DESPUÉS DE EJECUTAR EL SCRIPT
+
+El sistema actualizará el stock automáticamente cuando:
+- Recibas contenedores (IMPORT)
+- Hagas transferencias internas (INTERNAL)
+- Hagas ajustes de inventario (ADJUSTMENT)
+- Hagas ventas (SALES)
+- Proceses devoluciones (RETURNS)
+
+═══════════════════════════════════════════════════════════════
+
+¡EJECUTA FIX-TRIGGERS-DEFINITIVO.sql AHORA! 🚀

@@ -1,0 +1,69 @@
+# Environment files with credentials — NEVER commit
+.env.vercel
+.env.vercel.*
+
+# Claude Code local settings (may contain tokens)
+.claude/settings.local.json
+
+# Project backup copies
+azmol-stockerp/
+azmol-stockerp-1/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Environment variables - IMPORTANT: Never commit these files!
+.env
+.env.local
+.env.production
+.env.*.local
+web/.env
+web/.env.local
+web/.env.production
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Testing
+coverage/
+web/coverage/
+.nyc_output
+test-output.txt
+test-log.txt
+npm-test-output.txt
+run-test.ps1
+
+# Supabase
+.supabase/
+supabase/.temp/
+
+# Claude Code local settings (may contain secrets/tokens)
+.claude/settings.local.json
+
+# Local backups (CI backups are stored as GitHub Artifacts)
+backups/
+
+# Build outputs
+web/dist/
+web/build/
+.vercel
+.env*.local

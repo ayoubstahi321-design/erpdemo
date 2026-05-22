@@ -1,0 +1,5 @@
+-- DESACTIVAR RLS TEMPORALMENTE PARA TESTING
+ALTER TABLE profiles DISABLE ROW LEVEL SECURITY;
+
+-- Verificar datos
+SELECT id, name, role FROM profiles;

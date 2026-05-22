@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* RTL Support for Arabic */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+[dir="rtl"] body {
+  font-family: 'Cairo', 'Inter', sans-serif;
+}
+
+/* Fix common RTL issues */
+[dir="rtl"] .animate-spin {
+  animation-direction: reverse;
+}
+
+/* Ensure proper text alignment in RTL */
+[dir="rtl"] input[type="text"],
+[dir="rtl"] input[type="email"],
+[dir="rtl"] input[type="password"],
+[dir="rtl"] input[type="search"],
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  text-align: right;
+}
+
+/* Number inputs should remain LTR */
+[dir="rtl"] input[type="number"],
+[dir="rtl"] input[type="tel"] {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Smooth transitions for language switching */
+* {
+  transition-property: margin, padding;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+}

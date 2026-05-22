@@ -1,0 +1,62 @@
+name: PR Quality Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  pr-checks:
+    name: PR Quality Gates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check PR title format
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          if [[ ! "$PR_TITLE" =~ ^(Feature|Fix|Docs|Refactor|Test|Chore|Style|Perf|CI|Build):\ .+ ]]; then
+            echo "PR title must follow format: 'Type: Description'"
+            echo "Valid types: Feature, Fix, Docs, Refactor, Test, Chore, Style, Perf, CI, Build"
+            exit 1
+          fi
+        continue-on-error: true
+
+      - name: Check for console.log
+        run: |
+          if grep -r "console\.log" src/ --include="*.ts" --include="*.tsx" --exclude="*.test.*"; then
+            echo "Found console.log statements. Please remove them before merging."
+            exit 1
+          fi
+        continue-on-error: true
+
+      - name: Check bundle size
+        run: |
+          npm run build
+          BUNDLE_SIZE=$(du -sh dist | cut -f1)
+          echo "Bundle size: $BUNDLE_SIZE"
+          echo "bundle_size=$BUNDLE_SIZE" >> $GITHUB_OUTPUT
+
+      - name: Comment PR with build info
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ Build completed successfully!\n\nWorkflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            })

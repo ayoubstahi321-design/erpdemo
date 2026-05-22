@@ -1,0 +1,11 @@
+# Archivos sensibles - NO subir a Git
+credentials.json
+token.json
+.env.backup
+
+# Carpetas temporales
+temp_backups/
+invoices_pdf/
+
+# Logs
+*.log

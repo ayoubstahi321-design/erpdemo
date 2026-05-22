@@ -1,0 +1,89 @@
+name: Daily Supabase Backup
+
+on:
+  schedule:
+    # Every day at 03:00 UTC (04:00 CET / 05:00 CEST)
+    - cron: '0 3 * * *'
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          path: main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: main/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: main
+
+      - name: Run backup
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          SERVICE_ROLE_KEY: ${{ secrets.SERVICE_ROLE_KEY }}
+        run: node scripts/github-backup.mjs
+        working-directory: main
+
+      - name: Checkout backups branch
+        uses: actions/checkout@v4
+        with:
+          ref: backups
+          path: backups-branch
+          fetch-depth: 1
+        continue-on-error: true
+        id: checkout-backups
+
+      - name: Init backups branch if needed
+        if: steps.checkout-backups.outcome == 'failure'
+        run: |
+          mkdir -p backups-branch
+          cd backups-branch
+          git init
+          git remote add origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+          git checkout --orphan backups
+          echo "# Automated Supabase Backups" > README.md
+          echo "Daily backups stored permanently. Each .gz file can be restored via the app sidebar > Restore." >> README.md
+          git add README.md
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "init: backups branch"
+          git push origin backups
+
+      - name: Copy and push backup
+        run: |
+          BACKUP_FILE=$(ls main/backups/*.gz | head -1)
+          BACKUP_NAME=$(basename "$BACKUP_FILE")
+
+          cd backups-branch
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          mkdir -p backups
+          cp "$GITHUB_WORKSPACE/$BACKUP_FILE" "backups/$BACKUP_NAME"
+
+          git add "backups/$BACKUP_NAME"
+          git commit -m "backup: $BACKUP_NAME"
+          git push origin HEAD:backups
+
+          # Clean up: keep only last 90 backups
+          FILE_COUNT=$(ls backups/*.gz 2>/dev/null | wc -l)
+          if [ "$FILE_COUNT" -gt 90 ]; then
+            ls -t backups/*.gz | tail -n +91 | xargs rm -f
+            git add -A backups/
+            git commit -m "cleanup: keep last 90 backups" || true
+            git push origin HEAD:backups
+          fi
