@@ -1,4 +1,4 @@
-
+﻿
 import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react';
 import { Layout } from './components/Layout';
 import { Login } from './components/Login';
@@ -92,11 +92,11 @@ import './utils/migrateProducts';
 import './utils/migrateAll';
 
 // localStorage key for instant session restore on F5/refresh
-const PROFILE_CACHE_KEY = 'azmol_user_profile';
+const PROFILE_CACHE_KEY = 'stoqly_user_profile';
 
 // 2FA verification stored in localStorage (not sessionStorage) so it survives PWA kills on mobile.
 // Format: JSON { userId, verifiedAt } — valid for 8 hours per user.
-const ADMIN_2FA_KEY = 'azmol_admin_2fa_verified';
+const ADMIN_2FA_KEY = 'stoqly_admin_2fa_verified';
 const ADMIN_2FA_TTL_MS = 8 * 60 * 60 * 1000; // 8 hours
 
 function isAdmin2FAVerified(userId: string): boolean {
@@ -716,7 +716,7 @@ function App() {
         // Retry null session (cold start) for both cached and non-cached users.
         // On mobile, the network or Supabase Auth can be slow to respond after the device
         // wakes from sleep — a null result on the first attempt is often transient.
-        const hasStoredSession = Object.keys(localStorage).some(k => k === 'azmol-supabase-auth' || k.startsWith('sb-'));
+        const hasStoredSession = Object.keys(localStorage).some(k => k === 'stoqly-supabase-auth' || k.startsWith('sb-'));
         if (!session && hasStoredSession) {
           logger.auth('No session (cold start or wake-up?), retrying...');
           const maxRetries = hasCachedProfile ? 3 : 4;
@@ -992,7 +992,7 @@ function App() {
   useEffect(() => {
     if (!currentUser || isLoading || currentUser.role !== 'Admin') return;
 
-    const BACKUP_KEY = 'azmol_last_auto_backup';
+    const BACKUP_KEY = 'stoqly_last_auto_backup';
     const ONE_DAY = 24 * 60 * 60 * 1000;
     const last = localStorage.getItem(BACKUP_KEY);
     const elapsed = last ? Date.now() - new Date(last).getTime() : Infinity;

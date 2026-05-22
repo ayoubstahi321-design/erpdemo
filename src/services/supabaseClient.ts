@@ -82,7 +82,7 @@ export const supabase: SupabaseClient = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
         persistSession: true,
-        storageKey: 'azmol-supabase-auth',
+        storageKey: 'stoqly-supabase-auth',
         storage: window.localStorage,
         autoRefreshToken: true,
         detectSessionInUrl: true

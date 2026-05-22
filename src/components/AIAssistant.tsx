@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+﻿import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Send, Sparkles, X, Loader2, TrendingUp, Package, AlertTriangle, Users, ArrowDown, Copy, Check } from 'lucide-react';
 import { useLanguage } from '../services/i18n';
 import { aiService, AIContext, AIChatMessage } from '../services/aiService';
@@ -179,9 +179,9 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
     if (messages.length === 0) {
       const welcomeMessages: Record<string, string> = {
         es: `¡Hola ${currentUser.name}! Soy tu asistente AI de Azmol. ¿En qué puedo ayudarte hoy?`,
-        fr: `Bonjour ${currentUser.name}! Je suis votre assistant IA Azmol. Comment puis-je vous aider aujourd'hui?`,
-        en: `Hello ${currentUser.name}! I'm your Azmol AI assistant. How can I help you today?`,
-        ar: `مرحبا ${currentUser.name}! أنا مساعد أزمول الذكي. كيف يمكنني مساعدتك اليوم؟`
+        fr: `Bonjour ${currentUser.name}! Je suis votre Stoqly AI Assistant. Comment puis-je vous aider aujourd'hui?`,
+        en: `Hello ${currentUser.name}! I'm your Stoqly AI assistant. How can I help you today?`,
+        ar: `مرحبا ${currentUser.name}! أنا مساعد Stoqly الذكي. كيف يمكنني مساعدتك اليوم؟`
       };
 
       setMessages([{
@@ -276,7 +276,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
         <div className="bg-linear-to-r from-blue-600 to-blue-700 p-4 rounded-t-lg flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-white animate-pulse" />
-            <h3 className="font-semibold text-white">Azmol AI</h3>
+            <h3 className="font-semibold text-white">Stoqly AI</h3>
           </div>
           <button
             onClick={onClose}
@@ -369,7 +369,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
         <div className="flex items-center gap-3">
           <Sparkles className="w-8 h-8" />
           <div>
-            <h1 className="text-2xl font-bold">Azmol AI Assistant</h1>
+            <h1 className="text-2xl font-bold">Stoqly AI Assistant</h1>
             <p className="text-sm text-blue-100">
               {t('welcome')}, {currentUser.name} ({currentUser.role})
             </p>

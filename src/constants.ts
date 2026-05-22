@@ -1,23 +1,22 @@
 
 import { Product, ProductCategory, Sale, StockStatus, Warehouse, Transfer, Customer, User } from './types';
 
-export const APP_NAME = "Azmol ERP";
+export const APP_NAME = "Stoqly ERP";
 export const CURRENCY = "MAD";
 
-// OFFICIAL COMPANY DATA FOR DOCUMENTS
-// This remains as configuration data, not business data.
+// DEMO COMPANY DATA FOR DOCUMENTS
 export const COMPANY_INFO = {
-    name: "AZMOL MOROCCO SARL",
+    name: "DEMO COMPANY SARL",
     address: "123 Bd. Mohammed V, Zone Industrielle",
     city: "Casablanca, 20250",
     country: "Maroc",
     phone: "+212 522 99 88 77",
-    email: "contact@azmol.ma",
-    website: "www.azmol.ma",
-    // Legal IDs (Crucial for professional invoices)
+    email: "contact@democompany.ma",
+    website: "www.stoqly.com",
+    // Legal IDs
     ice: "001524367000088",
-    rc: "123456", // Registre de Commerce
-    if: "9876543", // Identifiant Fiscal
+    rc: "123456",
+    if: "9876543",
     cnss: "1234567",
     patente: "342516",
     capital: "100.000 DHS",

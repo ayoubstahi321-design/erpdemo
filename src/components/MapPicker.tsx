@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+﻿import { useEffect, useRef, useState, useCallback } from 'react';
 import { X, MapPin, Navigation, Loader2, Search, AlertCircle, Hash } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -49,7 +49,7 @@ async function reverseGeocode(lat: number, lng: number): Promise<{ address: stri
   try {
     const res = await fetch(
       `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=fr`,
-      { headers: { 'User-Agent': 'azmol-stockerp/1.0' } }
+      { headers: { 'User-Agent': 'stoqly-erp/1.0' } }
     );
     if (!res.ok) return null;
     const data = await res.json();
@@ -68,7 +68,7 @@ async function forwardGeocode(query: string): Promise<SearchResult[]> {
   try {
     const res = await fetch(
       `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=5&accept-language=es&countrycodes=ma`,
-      { headers: { 'User-Agent': 'azmol-stockerp/1.0' } }
+      { headers: { 'User-Agent': 'stoqly-erp/1.0' } }
     );
     if (!res.ok) return [];
     return await res.json();

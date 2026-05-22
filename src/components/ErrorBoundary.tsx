@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from 'react';
+﻿import React, { Component, ReactNode } from 'react';
 import { AlertTriangle } from 'lucide-react';
 
 interface Props {
@@ -48,7 +48,7 @@ const errorTranslations: Record<string, Record<string, string>> = {
 };
 
 function getErrorText(key: string): string {
-  const lang = localStorage.getItem('azmol_lang') || 'fr';
+  const lang = localStorage.getItem('stoqly_lang') || 'fr';
   return errorTranslations[lang]?.[key] || errorTranslations['fr'][key] || key;
 }
 
@@ -127,7 +127,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      const dir = (localStorage.getItem('azmol_lang') || 'fr') === 'ar' ? 'rtl' : 'ltr';
+      const dir = (localStorage.getItem('stoqly_lang') || 'fr') === 'ar' ? 'rtl' : 'ltr';
 
       return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4" dir={dir}>

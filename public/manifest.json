@@ -1,7 +1,7 @@
 {
-  "name": "Azmol Stock ERP",
-  "short_name": "Azmol ERP",
-  "description": "Enterprise Resource Planning system for inventory and sales management",
+  "name": "Stoqly ERP",
+  "short_name": "Stoqly",
+  "description": "Modern ERP system for inventory, sales and warehouse management",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -23,7 +23,7 @@
     }
   ],
   "categories": ["business", "productivity"],
-  "lang": "fr",
+  "lang": "en",
   "dir": "ltr",
   "prefer_related_applications": false
 }

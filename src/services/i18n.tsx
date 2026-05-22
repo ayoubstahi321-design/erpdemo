@@ -1,4 +1,4 @@
-
+﻿
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type Language = 'fr' | 'es' | 'ar' | 'en';
@@ -19,7 +19,7 @@ const translations: Translations = {
     sales: "Commandes B2B",
     pos: "Caisse / Comptoir",
     returns: "Retours",
-    ai_assistant: "Assistant IA Azmol",
+    ai_assistant: "Stoqly AI Assistant",
     users: "Utilisateurs",
     warehouses: "Entrepôts",
     suppliers: "Fournisseurs",
@@ -394,7 +394,7 @@ const translations: Translations = {
     tax_filter_ht_bons: "HT / Bons (0%)",
     no_invoices_found_period: "Aucune facture trouvée pour cette période.",
     ai_error_message: "Erreur lors du traitement de votre demande. Veuillez réessayer.",
-    ai_assistant_title: "Assistant IA Azmol",
+    ai_assistant_title: "Stoqly AI Assistant",
     search_logs: "Rechercher dans les logs...",
     audit_filter_all: "Toutes Actions",
     audit_filter_sales: "Ventes",
@@ -445,7 +445,7 @@ const translations: Translations = {
     account_created_verify_email: "Compte créé avec succès. Vérifiez votre email pour confirmer.",
     connection_error_check_internet: "Erreur de connexion. Vérifiez votre connexion Internet.",
     create_account: "Créer un Compte",
-    company_description: "Azmol British Petrochemicals",
+    company_description: "Stoqly ERP Demo",
     pdf_generation_error: "Erreur lors de la génération du PDF",
     export_pdf: "Exporter PDF",
     password_required_new_user: "Le mot de passe est requis pour créer un nouvel utilisateur",
@@ -579,7 +579,7 @@ const translations: Translations = {
     delete_profile_title: "Supprimer le profil",
     save_company_profile: "Enregistrer le Profil",
     save_profile_desc: "Enregistrer les paramètres actuels comme profil réutilisable",
-    profile_name_placeholder: "Nom du profil (ex: AZMOL Maroc, AZMOL Export)",
+    profile_name_placeholder: "Nom du profil (ex: Stoqly Maroc, Stoqly Export)",
     save_profile: "Enregistrer le Profil",
     company_logo: "Logo de l'Entreprise",
     delete_logo: "Supprimer le logo",
@@ -715,7 +715,7 @@ const translations: Translations = {
     sales: "Pedidos B2B",
     pos: "TPV / Mostrador",
     returns: "Devoluciones",
-    ai_assistant: "Asistente IA Azmol",
+    ai_assistant: "Stoqly AI Asistente",
     users: "Usuarios",
     warehouses: "Almacenes",
     suppliers: "Proveedores",
@@ -1090,7 +1090,7 @@ const translations: Translations = {
     tax_filter_ht_bons: "Base / Albaranes (0%)",
     no_invoices_found_period: "No se encontraron facturas para este período.",
     ai_error_message: "Error al procesar tu solicitud. Por favor, intenta de nuevo.",
-    ai_assistant_title: "Asistente IA Azmol",
+    ai_assistant_title: "Stoqly AI Asistente",
     search_logs: "Buscar en registros...",
     audit_filter_all: "Todas las Acciones",
     audit_filter_sales: "Ventas",
@@ -1141,7 +1141,7 @@ const translations: Translations = {
     account_created_verify_email: "Cuenta creada exitosamente. Revisa tu email para confirmar tu cuenta.",
     connection_error_check_internet: "Error de conexión. Verifica tu conexión a internet.",
     create_account: "Crear Cuenta",
-    company_description: "Azmol British Petrochemicals",
+    company_description: "Stoqly ERP Demo",
     pdf_generation_error: "Error al generar el PDF",
     export_pdf: "Exportar PDF",
     password_required_new_user: "La contraseña es requerida para crear un nuevo usuario",
@@ -1275,7 +1275,7 @@ const translations: Translations = {
     delete_profile_title: "Eliminar perfil",
     save_company_profile: "Guardar Perfil de Empresa",
     save_profile_desc: "Guarda la configuración actual como perfil reutilizable",
-    profile_name_placeholder: "Nombre del perfil (ej: AZMOL Marruecos, AZMOL Export)",
+    profile_name_placeholder: "Nombre del perfil (ej: Stoqly Marruecos, Stoqly Export)",
     save_profile: "Guardar Perfil",
     company_logo: "Logo de Empresa",
     delete_logo: "Eliminar logo",
@@ -1411,7 +1411,7 @@ const translations: Translations = {
     sales: "طلبات الشركات",
     pos: "نقطة البيع / الكاونتر",
     returns: "المرتجعات",
-    ai_assistant: "مساعد أزمول الذكي",
+    ai_assistant: "مساعد Stoqly الذكي",
     users: "المستخدمين",
     warehouses: "المستودعات",
     suppliers: "الموردون",
@@ -1786,7 +1786,7 @@ const translations: Translations = {
     tax_filter_ht_bons: "بدون ضريبة / إشعارات (0%)",
     no_invoices_found_period: "لم يتم العثور على فواتير لهذه الفترة.",
     ai_error_message: "حدث خطأ أثناء معالجة طلبك. يرجى المحاولة مرة أخرى.",
-    ai_assistant_title: "مساعد أزمول الذكي",
+    ai_assistant_title: "مساعد Stoqly الذكي",
     search_logs: "البحث في السجلات...",
     audit_filter_all: "جميع الإجراءات",
     audit_filter_sales: "المبيعات",
@@ -2107,7 +2107,7 @@ const translations: Translations = {
     sales: "B2B Orders",
     pos: "POS / Counter",
     returns: "Returns",
-    ai_assistant: "Azmol AI Assistant",
+    ai_assistant: "Stoqly AI Assistant",
     users: "Users",
     warehouses: "Warehouses",
     suppliers: "Suppliers",
@@ -2482,7 +2482,7 @@ const translations: Translations = {
     tax_filter_ht_bons: "Excl. Tax / Deliveries (0%)",
     no_invoices_found_period: "No invoices found for this period.",
     ai_error_message: "Error processing your request. Please try again.",
-    ai_assistant_title: "Azmol AI Assistant",
+    ai_assistant_title: "Stoqly AI Assistant",
     search_logs: "Search logs...",
     audit_filter_all: "All Actions",
     audit_filter_sales: "Sales",
@@ -2533,7 +2533,7 @@ const translations: Translations = {
     account_created_verify_email: "Account created successfully. Check your email to confirm your account.",
     connection_error_check_internet: "Connection error. Check your internet connection.",
     create_account: "Create Account",
-    company_description: "Azmol British Petrochemicals",
+    company_description: "Stoqly ERP Demo",
     pdf_generation_error: "Error generating PDF",
     export_pdf: "Export PDF",
     password_required_new_user: "Password is required to create a new user",
@@ -2661,7 +2661,7 @@ const translations: Translations = {
     delete_profile_title: "Delete profile",
     save_company_profile: "Save Company Profile",
     save_profile_desc: "Save current settings as a reusable profile",
-    profile_name_placeholder: "Profile name (e.g., AZMOL Morocco, AZMOL Export)",
+    profile_name_placeholder: "Profile name (e.g., Stoqly Morocco, Stoqly Export)",
     save_profile: "Save Profile",
     company_logo: "Company Logo",
     delete_logo: "Delete logo",
@@ -2802,14 +2802,14 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>(() => {
-      const saved = localStorage.getItem('azmol_lang');
+      const saved = localStorage.getItem('stoqly_lang');
       return (saved as Language) || 'fr';
   });
 
   const dir = language === 'ar' ? 'rtl' : 'ltr';
 
   useEffect(() => {
-    localStorage.setItem('azmol_lang', language);
+    localStorage.setItem('stoqly_lang', language);
     document.documentElement.dir = dir;
     document.documentElement.lang = language;
   }, [language, dir]);

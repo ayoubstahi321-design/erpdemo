@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState } from 'react';
 import { Logo } from './Logo';
 import { useLanguage } from '../services/i18n';
@@ -139,7 +139,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                       value={resetEmail}
                       onChange={(e) => setResetEmail(e.target.value)}
                       className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 sm:text-sm border-secondary-300 rounded-lg py-2.5 transition-colors duration-200"
-                      placeholder="admin@azmol.ma"
+                      placeholder="admin@demo.stoqly.com"
                     />
                   </div>
                 </div>
@@ -184,7 +184,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               {t('login_title')}
             </h2>
             <p className="mt-2 text-center text-sm text-secondary-600">
-              Azmol British Petrochemicals
+              Stoqly ERP Demo
             </p>
           </div>
 
@@ -208,7 +208,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-slate-300 rounded-lg py-2.5"
-                      placeholder="admin@azmol.ma"
+                      placeholder="admin@demo.stoqly.com"
                     />
                   </div>
                 </div>
