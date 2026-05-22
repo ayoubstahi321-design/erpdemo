@@ -104,9 +104,9 @@ serve(async (req) => {
     ];
 
     // 8. Call Groq API
-    const groqApiKey = Deno.env.get('GROQ_API_KEY');
+    const groqApiKey = Deno.env.get('estoqly');
     if (!groqApiKey) {
-      throw new Error('GROQ_API_KEY not configured');
+      throw new Error('Groq API key not configured (secret: estoqly)');
     }
 
     const groqResponse = await fetch(GROQ_API_URL, {
@@ -189,7 +189,7 @@ function filterContextByRole(context: AIContext, role: string): AIContext {
 
 function buildSystemPrompt(context: AIContext, userRole: string): string {
   const contextSummary = `
-You are Azmol AI Assistant, an intelligent business analyst for Azmol Stock ERP system.
+You are Stoqly AI, an intelligent business analyst for Stoqly ERP system.
 
 User Role: ${userRole}
 
