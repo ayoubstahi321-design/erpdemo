@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout main
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: main
 
@@ -39,7 +39,7 @@ jobs:
         working-directory: main
 
       - name: Checkout backups branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: backups
           path: backups-branch
