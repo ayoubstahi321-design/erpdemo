@@ -1470,7 +1470,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                                               className="px-3 py-1.5 bg-white rounded-lg border border-blue-200 hover:border-blue-500 hover:bg-blue-50 text-xs font-medium text-slate-700 hover:text-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5 group"
                                           >
                                               <span className="truncate max-w-[120px]">{product.name}</span>
-                                              <span className={`text-[10px] font-bold ${stock > 0 ? 'text-emerald-600' : 'text-rose-600'}`}>({formatStock(stock, product.unitsPerBox || 1)})</span>
+                                              <span className={`text-[10px] font-bold ${stock > 0 ? 'text-emerald-600' : 'text-rose-600'}`}>({formatStock(stock, product.unitsPerBox || 1, t('boxes_unit'), t('units_abbr'))})</span>
                                           </button>
                                       );
                                   })}
@@ -1546,7 +1546,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                                                       <div className="text-right ml-3">
                                                           <p className="text-sm font-bold text-slate-900">{p.price} {CURRENCY}</p>
                                                           <p className={`text-xs font-medium ${stock > 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
-                                                              Stock: {formatStock(stock, p.unitsPerBox || 1)}
+                                                              Stock: {formatStock(stock, p.unitsPerBox || 1, t('boxes_unit'), t('units_abbr'))}
                                                           </p>
                                                       </div>
                                                   </button>

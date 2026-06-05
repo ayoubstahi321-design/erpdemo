@@ -273,13 +273,13 @@ export const exportToCSV = (filename: string, headers: string[], rows: string[])
  * @param packSize Units per box/pack (use 1 for bulk/loose products)
  * @returns Formatted string like "2 caj. + 7 uds", "3 caj.", or "5 uds"
  */
-export const formatStock = (units: number, packSize: number): string => {
-  if (!packSize || packSize <= 1) return `${units} uds`;
+export const formatStock = (units: number, packSize: number, boxLabel = 'caj.', unitLabel = 'uds'): string => {
+  if (!packSize || packSize <= 1) return `${units} ${unitLabel}`;
   const boxes = Math.floor(units / packSize);
   const loose = units % packSize;
-  if (boxes > 0 && loose > 0) return `${boxes} caj. + ${loose} uds`;
-  if (boxes > 0) return `${boxes} caj.`;
-  return `${loose} uds`;
+  if (boxes > 0 && loose > 0) return `${boxes} ${boxLabel} + ${loose} ${unitLabel}`;
+  if (boxes > 0) return `${boxes} ${boxLabel}`;
+  return `${loose} ${unitLabel}`;
 };
 
 /**

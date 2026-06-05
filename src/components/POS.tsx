@@ -362,7 +362,7 @@ const POS: React.FC<POSProps> = ({ products: propsProducts, warehouses: propsWar
       const addingUnits = sellMode === 'box' ? unitsPerBox : 1;
 
       if (cartUnitsUsed + addingUnits > stockUnits) {
-          alert(`${t('error_insufficient_stock')} (${formatStock(stockUnits, unitsPerBox)})`);
+          alert(`${t('error_insufficient_stock')} (${formatStock(stockUnits, unitsPerBox, t('boxes_unit'), t('units_abbr'))})`);
           return;
       }
 
@@ -407,7 +407,7 @@ const POS: React.FC<POSProps> = ({ products: propsProducts, warehouses: propsWar
       const unitsNeeded = item.sellMode === 'box' ? newQty * packSize : newQty;
 
       if (unitsNeeded > stockUnits) {
-          alert(`${t('error_insufficient_stock')} (${formatStock(stockUnits, packSize)})`);
+          alert(`${t('error_insufficient_stock')} (${formatStock(stockUnits, packSize, t('boxes_unit'), t('units_abbr'))})`);
           return;
       }
 
@@ -848,7 +848,7 @@ const POS: React.FC<POSProps> = ({ products: propsProducts, warehouses: propsWar
                                           {p.packSize} {p.unit}
                                       </span>
                                       <span className={`text-[10px] font-bold ${hasStock ? 'text-emerald-600' : 'text-rose-500'}`}>
-                                          {formatStock(stock, p.packSize)}
+                                          {formatStock(stock, p.packSize, t('boxes_unit'), t('units_abbr'))}
                                       </span>
                                   </div>
                                   <h3 className="font-bold text-slate-800 text-sm leading-tight line-clamp-2 min-h-[2.5rem]" title={p.name}>

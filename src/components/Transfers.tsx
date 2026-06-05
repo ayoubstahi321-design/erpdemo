@@ -446,7 +446,7 @@ const Transfers: React.FC<TransfersProps> = (props) => {
                               const pLevels = p.stockLevels || {};
                               const stock = activeTab === 'INTERNAL' ? (pLevels[effectiveFromId] || 0) : (pLevels[effectiveTargetWarehouseId] || 0);
                               const ps = p.unitsPerBox || 1;
-                              const stockLabel = stockMigrated && ps > 1 ? formatStock(stock, ps) : ps > 1 ? `${stock} caj.` : `${stock} uds`;
+                              const stockLabel = stockMigrated && ps > 1 ? formatStock(stock, ps, t('boxes_unit'), t('units_abbr')) : ps > 1 ? `${stock} ${t('boxes_unit')}` : `${stock} ${t('units_abbr')}`;
                               return <option key={p.id} value={p.id}>{p.name} ({p.packSize}{p.unit}) (Stock: {stockLabel})</option>
                           })}
                       </select>

@@ -657,7 +657,7 @@ const Inventory: React.FC<InventoryProps> = (props) => {
                                     <div className={`text-sm font-bold flex flex-col items-center justify-center ${isLowStock ? 'text-rose-600' : 'text-slate-900'}`}>
                                         <div className="flex items-center">
                                             {isLowStock && <AlertTriangle className="w-4 h-4 mr-1.5 animate-pulse text-rose-500" />}
-                                            {formatStock(totalStock, product.unitsPerBox || 1)}
+                                            {formatStock(totalStock, product.unitsPerBox || 1, t('boxes_unit'), t('units_abbr'))}
                                         </div>
                                         {isLowStock && (
                                             <span className="text-[10px] font-medium bg-rose-100 text-rose-700 px-1.5 py-0.5 rounded mt-1 border border-rose-200">
@@ -673,7 +673,7 @@ const Inventory: React.FC<InventoryProps> = (props) => {
                                             if (qty === 0) return null;
                                             return (
                                                 <span key={w.id} className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-700 border border-slate-200" title={w.name}>
-                                                    {w.name.split(' ')[0]}: {stockMigrated ? formatStock(qty, product.unitsPerBox || 1) : `${qty} caj.`}
+                                                    {w.name.split(' ')[0]}: {stockMigrated ? formatStock(qty, product.unitsPerBox || 1, t('boxes_unit'), t('units_abbr')) : `${qty} ${t('boxes_unit')}`}
                                                 </span>
                                             );
                                         })}
@@ -744,7 +744,7 @@ const Inventory: React.FC<InventoryProps> = (props) => {
                               <div className={`flex flex-col items-end ${isLowStock ? 'text-rose-600' : 'text-slate-900'}`}>
                                   <span className="text-lg font-bold flex items-center">
                                       {isLowStock && <AlertTriangle className="w-4 h-4 mr-1" />}
-                                      {formatStock(totalStock, product.unitsPerBox || 1)}
+                                      {formatStock(totalStock, product.unitsPerBox || 1, t('boxes_unit'), t('units_abbr'))}
                                   </span>
                                   <span className="text-xs text-slate-500">{product.packSize} {product.unit}</span>
                               </div>
@@ -757,7 +757,7 @@ const Inventory: React.FC<InventoryProps> = (props) => {
                                   if (qty === 0) return null;
                                   return (
                                       <span key={w.id} className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-700 border border-slate-200" title={w.name}>
-                                          {w.name.split(' ')[0]}: {formatStock(qty, product.unitsPerBox || 1)}
+                                          {w.name.split(' ')[0]}: {formatStock(qty, product.unitsPerBox || 1, t('boxes_unit'), t('units_abbr'))}
                                       </span>
                                   );
                               })}
@@ -1254,7 +1254,7 @@ const Inventory: React.FC<InventoryProps> = (props) => {
                                                   const displayPs = stockMigrated ? (transferringProduct.unitsPerBox || 1) : 1;
                                                   return (
                                                       <option key={w.id} value={w.id} disabled={w.id === transferFromId}>
-                                                          {w.name} ({formatStock(qty, displayPs)})
+                                                          {w.name} ({formatStock(qty, displayPs, t('boxes_unit'), t('units_abbr'))})
                                                       </option>
                                                   );
                                               })}
