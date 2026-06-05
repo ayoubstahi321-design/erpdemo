@@ -1,0 +1,21 @@
+name: Keep Supabase Alive
+
+on:
+  schedule:
+    - cron: '0 10 */3 * *'  # Every 3 days at 10:00 UTC
+  workflow_dispatch:         # Allow manual trigger from GitHub UI
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://hliwfqcsqlcpxmuerypb.supabase.co/rest/v1/" \
+            -H "apikey: sb_publishable_GbDr1UParh6bSV_TpSRN2w_rzX_VjN0" \
+            -H "Authorization: Bearer sb_publishable_GbDr1UParh6bSV_TpSRN2w_rzX_VjN0")
+          echo "Supabase ping status: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "Warning: Unexpected status $STATUS"
+          fi
