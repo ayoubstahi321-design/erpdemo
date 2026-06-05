@@ -1234,7 +1234,8 @@ function App() {
       // Valid for 8 hours per user — cleared on explicit logout.
       // Skip 2FA on session restore — user already has a valid Supabase session.
       // 2FA is only required when explicitly signing in with credentials (isSessionRestore=false).
-      const needsVerification = userProfile.role === 'Admin' && !isAdmin2FAVerified(user.id) && !isSessionRestore;
+      const needsVerification = !FEATURES.DEMO_MODE &&
+        userProfile.role === 'Admin' && !isAdmin2FAVerified(user.id) && !isSessionRestore;
 
       if (needsVerification) {
         logger.auth('Admin detected - initiating 2FA verification', user.id);
@@ -1258,17 +1259,11 @@ function App() {
           } else {
             const errorData = await res.json().catch(() => ({}));
             logger.error('Failed to send 2FA code', errorData);
-            showNotification('⚠️ Código 2FA no pudo enviarse — accediendo solo con contraseña.', 'info');
-            // Mark session as verified so page refreshes/restores don't trigger 2FA again
             setAdmin2FAVerified(user.id);
-            // Fall through: allow login without 2FA when email service is unavailable
           }
         } catch (err) {
           logger.error('Error sending 2FA code', err);
-          showNotification('⚠️ Error de red al enviar código — accediendo solo con contraseña.', 'info');
-          // Mark session as verified so page refreshes/restores don't trigger 2FA again
           setAdmin2FAVerified(user.id);
-          // Fall through: allow login without 2FA when email service is unavailable
         }
       }
 

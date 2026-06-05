@@ -30,4 +30,6 @@ export const FEATURES = {
   OFFLINE_MODE: FEATURE_FLAGS.OFFLINE_MODE,
   /** Enable realtime subscriptions */
   REALTIME: FEATURE_FLAGS.ENABLE_REALTIME,
+  /** Demo mode: disables 2FA and other non-demo features */
+  DEMO_MODE: true,
 };

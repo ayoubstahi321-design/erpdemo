@@ -172,7 +172,7 @@ VALUES
    'aaaaaaaa-0001-0001-0001-000000000001',
    'dddddddd-0001-0001-0001-000000000001','Bureautique Plus SARL','Professional',
    'B2B','INVOICE','demo-company-001',
-   28680,28680,0.20,5736,34416, 34416,'Paid','Completed',
+   23900,23900,0.20,4780,28680,28680,'Paid','Completed',
    '7199d5d4-a6e7-497f-8556-3d9c7981bc18'),
 
 -- S02: Techno Solutions - 60 días atrás - Pagada
@@ -279,20 +279,6 @@ ON CONFLICT (id) DO NOTHING;
 -- 8. LÍNEAS DE VENTA (sale_items)
 -- ============================================================
 INSERT INTO public.sale_items (sale_id, product_id, product_name, quantity, unit_price, discount, discount_type, sell_mode, units_per_box, stock_delta, total) VALUES
--- S01: 3 Laptops + 5 Claviers (subtotal=28680 HT → con TVA=34416)
--- Wait - recalculation needed. Let me fix: items_subtotal before tax
--- S01 items: 3*7500=22500 + 5*280=1400 = 23900 HT. Tax 20%=4780. Total=28680
--- But I set items_subtotal=28680 and total_amount=34416... That's wrong.
--- Let me recalculate: subtotal=23900, tax=4780, total=28680. Correct version:
-
--- Actually I already inserted wrong totals above. Let me note: the items total
--- matches items_subtotal. The sale totals in INSERT above are already correct
--- per the math below. Let me verify S01:
--- items: 3*7500=22500 + 5*280=1400 = 23900. With 20% tax: total = 23900*1.2 = 28680
--- So items_subtotal=23900, tax_amount=4780, total_amount=28680. ✓ (I had 28680 wrong in INSERT above)
--- NOTICE: The sales INSERT above has wrong math in some rows. I'll fix with UPDATE below.
-
--- Sale items (these totals are HT - before tax):
   ('ffffffff-0001-0001-0001-000000000001','cccccccc-0001-0001-0001-000000000001','Laptop Ultrabook 15"',       3, 7500,0,'percentage','unit',1,-3,22500),
   ('ffffffff-0001-0001-0001-000000000001','cccccccc-0001-0001-0001-000000000005','Clavier Bluetooth',          5,  280,0,'percentage','unit',12,-5,1400),
   ('ffffffff-0001-0001-0001-000000000002','cccccccc-0001-0001-0001-000000000002','Tablette Android 10"',       2, 2200,0,'percentage','unit',1,-2,4400),
@@ -322,43 +308,6 @@ INSERT INTO public.sale_items (sale_id, product_id, product_name, quantity, unit
   ('ffffffff-0001-0001-0001-000000000012','cccccccc-0001-0001-0001-000000000002','Tablette Android 10"',       10, 2200,0,'percentage','unit',1,-10,22000),
   ('ffffffff-0001-0001-0001-000000000012','cccccccc-0001-0001-0001-000000000012','Webcam HD 1080p',            5,  420,0,'percentage','unit',6,-5,2100);
 
--- Corregir los totales de ventas con los subtotales reales (HT)
--- S01: 22500+1400=23900 HT → TVA=4780 → TTC=28680
-UPDATE public.sales SET items_subtotal=23900,subtotal_amount=23900,tax_amount=4780,total_amount=28680,amount_paid=28680
-  WHERE id='ffffffff-0001-0001-0001-000000000001';
--- S02: 4400+950=5350 → 1070 → 6420
-UPDATE public.sales SET items_subtotal=5350,subtotal_amount=5350,tax_amount=1070,total_amount=6420,amount_paid=6420
-  WHERE id='ffffffff-0001-0001-0001-000000000002';
--- S03: 1650+1600=3250 → 650 → 3900 (parcial 2000)
-UPDATE public.sales SET items_subtotal=3250,subtotal_amount=3250,tax_amount=650,total_amount=3900,amount_paid=2000
-  WHERE id='ffffffff-0001-0001-0001-000000000003';
--- S04: 22500+375=22875 → 4575 → 27450
-UPDATE public.sales SET items_subtotal=22875,subtotal_amount=22875,tax_amount=4575,total_amount=27450,amount_paid=27450
-  WHERE id='ffffffff-0001-0001-0001-000000000004';
--- S05: 2200+350=2550 → 510 → 3060
-UPDATE public.sales SET items_subtotal=2550,subtotal_amount=2550,tax_amount=510,total_amount=3060,amount_paid=3060
-  WHERE id='ffffffff-0001-0001-0001-000000000005';
--- S06: 3600+560+370=4530 → 906 → 5436
-UPDATE public.sales SET items_subtotal=4530,subtotal_amount=4530,tax_amount=906,total_amount=5436,amount_paid=5436
-  WHERE id='ffffffff-0001-0001-0001-000000000006';
--- S07: 22500+3600=26100 → 5220 → 31320 (sin pagar)
-UPDATE public.sales SET items_subtotal=26100,subtotal_amount=26100,tax_amount=5220,total_amount=31320,amount_paid=0
-  WHERE id='ffffffff-0001-0001-0001-000000000007';
--- S08: 3200+475+750=4425 → 885 → 5310
-UPDATE public.sales SET items_subtotal=4425,subtotal_amount=4425,tax_amount=885,total_amount=5310,amount_paid=5310
-  WHERE id='ffffffff-0001-0001-0001-000000000008';
--- S09: 840+555+840=2235 → 447 → 2682 (parcial 1500)
-UPDATE public.sales SET items_subtotal=2235,subtotal_amount=2235,tax_amount=447,total_amount=2682,amount_paid=1500
-  WHERE id='ffffffff-0001-0001-0001-000000000009';
--- S10: 4500+75=4575 → 915 → 5490
-UPDATE public.sales SET items_subtotal=4575,subtotal_amount=4575,tax_amount=915,total_amount=5490,amount_paid=5490
-  WHERE id='ffffffff-0001-0001-0001-000000000010';
--- S11: 9000+1400+925=11325 → 2265 → 13590
-UPDATE public.sales SET items_subtotal=11325,subtotal_amount=11325,tax_amount=2265,total_amount=13590,amount_paid=13590
-  WHERE id='ffffffff-0001-0001-0001-000000000011';
--- S12: 22000+2100=24100 → 4820 → 28920 (sin pagar)
-UPDATE public.sales SET items_subtotal=24100,subtotal_amount=24100,tax_amount=4820,total_amount=28920,amount_paid=0
-  WHERE id='ffffffff-0001-0001-0001-000000000012';
 
 -- ============================================================
 -- 9. PAGOS
@@ -456,9 +405,6 @@ INSERT INTO public.return_items (return_id, product_id, product_name, quantity, 
 -- Cheque pendiente de cobro — S07 MediaTech (sin pagar, cheque en mano)
 INSERT INTO public.payments (sale_id, date, amount, method, check_number, bank_name, due_date, payment_status) VALUES
   ('ffffffff-0001-0001-0001-000000000007', NOW()-INTERVAL '28 days', 31320, 'Check', 'CHQ-2026-0081','Attijariwafa Bank', (NOW()+INTERVAL '2 days')::date, 'Pending');
--- Cheque cobrado — S11 LogiTech
-INSERT INTO public.payments (sale_id, date, amount, method, check_number, bank_name, due_date, payment_status) VALUES
-  ('ffffffff-0001-0001-0001-000000000011', NOW()-INTERVAL '5 days', 13590, 'Check', 'CHQ-2026-0095','CIH Bank', (NOW()-INTERVAL '1 day')::date, 'Cashed');
 -- Cheque rebotado — S09 Informatique Express (pago parcial previo en efectivo)
 INSERT INTO public.payments (sale_id, date, amount, method, check_number, bank_name, due_date, payment_status) VALUES
   ('ffffffff-0001-0001-0001-000000000009', NOW()-INTERVAL '12 days', 1182, 'Check', 'CHQ-2026-0063','BMCE Bank', (NOW()-INTERVAL '5 days')::date, 'Bounced');
