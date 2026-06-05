@@ -1,5 +1,7 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { logger } from '../utils/logger'
+import { FEATURES } from '../config/features'
+import { applyDemoProtection } from '../utils/demoGuard'
 
 interface ImportMeta {
   readonly env: {
@@ -89,6 +91,12 @@ export const supabase: SupabaseClient = isSupabaseConfigured
       }
     })
   : createMockSupabaseClient() as unknown as SupabaseClient;
+
+// In demo mode, intercept all write operations so multiple clients
+// can use the demo simultaneously without corrupting shared data.
+if (isSupabaseConfigured && FEATURES.DEMO_MODE) {
+  applyDemoProtection(supabase);
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Cold-start retry utility

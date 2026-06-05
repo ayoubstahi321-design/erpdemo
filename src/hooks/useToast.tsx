@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import { ToastContainer, ToastMessage, ToastType } from '../components/Toast';
 
 interface ToastContextType {
@@ -12,6 +12,7 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const lastDemoToastRef = useRef<number>(0);
 
   const addToast = useCallback((type: ToastType, message: string, duration?: number) => {
     const id = `toast-${Date.now()}-${Math.random()}`;
@@ -38,6 +39,19 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const info = useCallback((message: string, duration?: number) => {
     addToast('info', message, duration);
+  }, [addToast]);
+
+  // Listen for demo write intercepts and show a rate-limited info toast
+  useEffect(() => {
+    const DEMO_TOAST_COOLDOWN_MS = 4000;
+    const handler = () => {
+      const now = Date.now();
+      if (now - lastDemoToastRef.current < DEMO_TOAST_COOLDOWN_MS) return;
+      lastDemoToastRef.current = now;
+      addToast('info', 'Modo Demo — los cambios son temporales y no se guardan', 4000);
+    };
+    window.addEventListener('stoqly:demo-write-blocked', handler);
+    return () => window.removeEventListener('stoqly:demo-write-blocked', handler);
   }, [addToast]);
 
   return (
