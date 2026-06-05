@@ -1104,7 +1104,7 @@ const POS: React.FC<POSProps> = ({ products: propsProducts, warehouses: propsWar
                                                           ? 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
                                                           : 'bg-teal-100 text-teal-700 hover:bg-teal-200'
                                                   }`}
-                                                  title={isBoxMode ? `Caja de ${item.unitsPerBox} unités` : 'Unité'}
+                                                  title={isBoxMode ? `${t('box_sing')} × ${item.unitsPerBox}` : t('unit_sing')}
                                               >
                                                   {isBoxMode ? <Box className="w-2.5 h-2.5" /> : <Package className="w-2.5 h-2.5" />}
                                                   {isBoxMode ? `x${item.unitsPerBox}` : 'U'}
@@ -1138,7 +1138,7 @@ const POS: React.FC<POSProps> = ({ products: propsProducts, warehouses: propsWar
                                           <button onClick={() => handleUpdateQuantity(idx, 1)} className="w-6 h-6 flex items-center justify-center bg-slate-100 hover:bg-slate-200 rounded text-slate-600 transition-colors"><Plus className="w-3 h-3" /></button>
                                           <span className="text-[10px] text-slate-400 ml-1">
                                               x {effectivePrice.toFixed(2)}
-                                              <span className="text-[8px] ml-0.5">{isBoxMode ? '/caja' : '/u'}</span>
+                                              <span className="text-[8px] ml-0.5">{isBoxMode ? t('per_box') : '/u'}</span>
                                           </span>
                                       </div>
                                       <div className="flex items-center gap-1">

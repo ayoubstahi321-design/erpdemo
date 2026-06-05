@@ -1368,7 +1368,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                               </select>
                               {isFirstOrder && selectedCustomerId && !editingSale && !isQuoteMode && (
                                   <div className="mt-1 flex items-center gap-1 text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 rounded px-2 py-0.5 w-fit">
-                                      ⭐ 1er pedido — −5 DH/caja
+                                      ⭐ {t('first_order_promo')}
                                   </div>
                               )}
                               {selectedCustomerId && volumeTiers.length > 0 && !editingSale && (
@@ -1610,7 +1610,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                                                           ? 'bg-amber-100 text-amber-700 border-amber-300 hover:bg-amber-200'
                                                           : 'bg-slate-100 text-slate-500 border-slate-300 hover:bg-slate-200'
                                                   }`}
-                                                  title={isBoxMode ? `Caja × ${item.unitsPerBox} uds — clic para vender por unidad` : 'Unidad — clic para vender por caja'}
+                                                  title={isBoxMode ? `${t('box_sing')} × ${item.unitsPerBox} ${t('click_unit')}` : `${t('unit_sing')} ${t('click_box')}`}
                                               >
                                                   {isBoxMode ? `📦 ×${item.unitsPerBox}` : '1 ud'}
                                               </button>
@@ -1646,7 +1646,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                                                       onChange={(e) => updateItem(idx, 'unitPrice', parseFloat(e.target.value) || 0)}
                                                       title="Modificar precio unitario"
                                                   />
-                                                  {isBoxMode && <div className="text-xs text-slate-400 text-center">= {effectiveUnitPrice.toFixed(2)}/caja</div>}
+                                                  {isBoxMode && <div className="text-xs text-slate-400 text-center">= {effectiveUnitPrice.toFixed(2)}{t('per_box')}</div>}
                                               </div>
                                           ) : (
                                               <><div>{effectiveUnitPrice.toFixed(2)}</div>
@@ -1698,7 +1698,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                                                                   ? 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                                                                   : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
                                                           }`}
-                                                          title={isPercentage ? 'Porcentaje' : isBoxMode ? 'DH por unidad (× unidades de la caja)' : 'Monto fijo (DH)'}
+                                                          title={isPercentage ? '%' : isBoxMode ? t('dh_per_unit_in_box') : 'DH'}
                                                       >
                                                           {isPercentage ? '%' : isBoxMode ? 'DH/ud' : 'DH'}
                                                       </button>
@@ -1712,7 +1712,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                                                   {/* Hint: fixed DH discount in box mode is per unit */}
                                                   {isBoxMode && !isPercentage && item.discount > 0 && (
                                                       <div className="text-xs text-amber-600 mt-0.5">
-                                                          ×{item.unitsPerBox} = {(item.discount * (item.unitsPerBox || 1)).toFixed(2)} DH/caja
+                                                          ×{item.unitsPerBox} = {(item.discount * (item.unitsPerBox || 1)).toFixed(2)} DH{t('per_box')}
                                                       </div>
                                                   )}
                                               </>
@@ -1772,13 +1772,13 @@ const Sales: React.FC<SalesProps> = (props) => {
                                                       <div className="flex items-center justify-between">
                                                           <div className="flex items-center gap-2 font-semibold">
                                                               {isMaxTier ? (
-                                                                  <span className="text-emerald-700">✓ Descuento máximo activo — −{activeVolumeTier.discountPerBox} DH/caja ({activeVolumeTier.label})</span>
+                                                                  <span className="text-emerald-700">✓ {t('vol_max_active')} — −{activeVolumeTier.discountPerBox} DH{t('per_box')} ({activeVolumeTier.label})</span>
                                                               ) : activeVolumeTier ? (
-                                                                  <span className="text-blue-700">−{activeVolumeTier.discountPerBox} {companySettings.currencySymbol || 'DH'}/caja activo ({activeVolumeTier.label}) → añade {amountToNext.toLocaleString('fr-MA')} {companySettings.currencySymbol || 'DH'} más → −{nextTier!.discountPerBox} {companySettings.currencySymbol || 'DH'}/caja</span>
+                                                                  <span className="text-blue-700">−{activeVolumeTier.discountPerBox} {companySettings.currencySymbol || 'DH'}{t('per_box')} {t('vol_active')} ({activeVolumeTier.label}) → {t('vol_add')} {amountToNext.toLocaleString('fr-MA')} {companySettings.currencySymbol || 'DH'} {t('vol_more_then')} −{nextTier!.discountPerBox} {companySettings.currencySymbol || 'DH'}{t('per_box')}</span>
                                                               ) : isWelcome ? (
-                                                                  <span className="text-amber-700">⭐ 1er pedido — −5 {companySettings.currencySymbol || 'DH'}/caja aplicado{nextTier ? ` · añade ${amountToNext.toLocaleString('fr-MA')} ${companySettings.currencySymbol || 'DH'} → −${nextTier.discountPerBox} ${companySettings.currencySymbol || 'DH'}/caja` : ''}</span>
+                                                                  <span className="text-amber-700">⭐ {t('first_order_promo')} {t('vol_applied')}{nextTier ? ` · ${t('vol_add')} ${amountToNext.toLocaleString('fr-MA')} ${companySettings.currencySymbol || 'DH'} → −${nextTier.discountPerBox} ${companySettings.currencySymbol || 'DH'}${t('per_box')}` : ''}</span>
                                                               ) : (
-                                                                  <span className="text-slate-600">Añade {amountToNext.toLocaleString('fr-MA')} DH → −{nextTier!.discountPerBox} DH/caja en todo el pedido</span>
+                                                                  <span className="text-slate-600">{t('vol_add')} {amountToNext.toLocaleString('fr-MA')} DH → −{nextTier!.discountPerBox} DH{t('per_box')} {t('vol_on_order')}</span>
                                                               )}
                                                           </div>
                                                           {currentSavings > 0 && (
