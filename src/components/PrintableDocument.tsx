@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import { Sale, Customer, Warehouse, CompanySettings, Product } from '../types';
 import { X, Printer, Share2, FileDown, Loader2, Mail, MessageCircle, PenLine } from 'lucide-react';
 import { QRCodeSVG, QRCodeCanvas } from 'qrcode.react';
-import { pdf, PDFViewer } from '@react-pdf/renderer';
+import { pdf } from '@react-pdf/renderer';
 import { CURRENCY } from '../constants';
 import { logger } from '../utils/logger';
 import { PDFInvoiceDocument } from './PDFInvoiceDocument';
@@ -291,6 +291,49 @@ const PrintableDocument: React.FC<PrintableDocumentProps> = ({ sale, type, forma
         () => ({ ...companySettings, logoBase64: pdfLogoBase64 ?? undefined }),
         [companySettings, pdfLogoBase64]
     );
+
+    // PDF blob URL for inline preview — avoids PDFViewer iframe/worker issues in production
+    const [pdfBlobUrl, setPdfBlobUrl] = React.useState<string | null>(null);
+    const [pdfBlobLoading, setPdfBlobLoading] = React.useState(false);
+    React.useEffect(() => {
+        if (pdfLogoBase64 === null) return; // logo still converting
+
+        let cancelled = false;
+        let activeUrl: string | null = null;
+        setPdfBlobLoading(true);
+        setPdfBlobUrl(null);
+
+        (async () => {
+            try {
+                const blob = await pdf(
+                    <PDFInvoiceDocument
+                        sale={sale}
+                        type={type}
+                        customer={customer}
+                        warehouse={warehouse}
+                        companySettings={pdfSettings}
+                        products={products}
+                        qrCodeDataUrl={qrDataUrl}
+                        stampDataUrl={stampDataUrl}
+                        signatureBase64={sessionSignature ?? companySettings.signatureBase64}
+                    />
+                ).toBlob();
+                if (cancelled) return;
+                activeUrl = URL.createObjectURL(blob);
+                setPdfBlobUrl(activeUrl);
+            } catch (e) {
+                logger.error('PDF preview generation failed:', e);
+            } finally {
+                if (!cancelled) setPdfBlobLoading(false);
+            }
+        })();
+
+        return () => {
+            cancelled = true;
+            if (activeUrl) URL.revokeObjectURL(activeUrl);
+        };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sale.id, type, pdfSettings, qrDataUrl, stampDataUrl, sessionSignature]);
 
     const handlePrint = async () => {
         if (isGeneratingPDF) return;
@@ -858,29 +901,29 @@ const PrintableDocument: React.FC<PrintableDocumentProps> = ({ sale, type, forma
                 </div>
             </div>
 
-            {/* Document Preview — renders the exact PDF inline */}
-            <div className="flex-1 w-full" style={{ minHeight: 0 }}>
-                {pdfLogoBase64 === null ? (
-                    <div className="flex items-center justify-center h-full text-slate-400 text-sm">
-                        <Loader2 className="w-5 h-5 animate-spin mr-2" /> Chargement du logo...
+            {/* Document Preview — blob URL + embed avoids PDFViewer iframe/worker issues */}
+            <div className="flex-1 w-full" style={{ minHeight: '80vh' }}>
+                {(pdfLogoBase64 === null || pdfBlobLoading) ? (
+                    <div className="flex items-center justify-center h-64 text-slate-400 text-sm">
+                        <Loader2 className="w-5 h-5 animate-spin mr-2" /> Génération du PDF...
                     </div>
-                ) : (
-                    <PDFViewer
+                ) : pdfBlobUrl ? (
+                    <embed
+                        src={pdfBlobUrl}
+                        type="application/pdf"
                         width="100%"
-                        height="100%"
-                    >
-                        <PDFInvoiceDocument
-                            sale={sale}
-                            type={type}
-                            customer={customer}
-                            warehouse={warehouse}
-                            companySettings={pdfSettings}
-                            products={products}
-                            qrCodeDataUrl={qrDataUrl}
-                            stampDataUrl={stampDataUrl}
-                            signatureBase64={sessionSignature ?? companySettings.signatureBase64}
-                        />
-                    </PDFViewer>
+                        style={{ height: '85vh' }}
+                    />
+                ) : (
+                    <div className="flex flex-col items-center justify-center h-64 text-slate-400 text-sm gap-3">
+                        <p>Erreur lors de la génération du PDF.</p>
+                        <button
+                            onClick={handleDownloadPDF}
+                            className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700"
+                        >
+                            Télécharger à la place
+                        </button>
+                    </div>
                 )}
             </div>
         </div>

@@ -61,6 +61,22 @@ const Returns: React.FC<ReturnsProps> = (props) => {
     }
   };
 
+  // Must be before early returns — hooks cannot be called conditionally
+  const filteredReturns = useMemo(() => {
+    const q = searchTerm.toLowerCase().trim();
+    if (!q) return returns;
+    return returns.filter(ret => {
+      const saleRef = sales.find(s => s.id === ret.originalSaleId);
+      const invoiceRef = saleRef?.invoiceNumber || saleRef?.deliveryNoteNumber || '';
+      return (
+        ret.customerName.toLowerCase().includes(q) ||
+        (ret.reason || '').toLowerCase().includes(q) ||
+        invoiceRef.toLowerCase().includes(q) ||
+        ret.items.some(i => i.productName.toLowerCase().includes(q))
+      );
+    });
+  }, [returns, searchTerm, sales]);
+
   // Loading state
   if (loading) {
     return (
@@ -96,21 +112,6 @@ const Returns: React.FC<ReturnsProps> = (props) => {
       </div>
     );
   }
-
-  const filteredReturns = useMemo(() => {
-    const q = searchTerm.toLowerCase().trim();
-    if (!q) return returns;
-    return returns.filter(ret => {
-      const saleRef = sales.find(s => s.id === ret.originalSaleId);
-      const invoiceRef = saleRef?.invoiceNumber || saleRef?.deliveryNoteNumber || '';
-      return (
-        ret.customerName.toLowerCase().includes(q) ||
-        (ret.reason || '').toLowerCase().includes(q) ||
-        invoiceRef.toLowerCase().includes(q) ||
-        ret.items.some(i => i.productName.toLowerCase().includes(q))
-      );
-    });
-  }, [returns, searchTerm, sales]);
 
   return (
     <div className="space-y-6">
