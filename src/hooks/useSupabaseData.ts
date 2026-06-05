@@ -1691,34 +1691,28 @@ export function useReturns() {
     try {
       setLoading(true);
 
-      // Get user's company ID for multi-tenant filtering
-      const companyId = await getCurrentUserCompanyId();
-
-      // Apply company filtering (automatically handles Admin vs regular users)
+      // returns table has no company_id column — fetch all and filter client-side if needed
       const { data, error: fetchError } = await retryOnColdStart(() =>
-        applyCompanyFilter(
-          supabase
-            .from('returns')
-            .select(`
+        supabase
+          .from('returns')
+          .select(`
+            id,
+            date,
+            original_sale_id,
+            customer_id,
+            customer_name,
+            warehouse_id,
+            reason,
+            created_by,
+            created_at,
+            return_items (
               id,
-              date,
-              original_sale_id,
-              customer_id,
-              customer_name,
-              warehouse_id,
-              reason,
-              company_id,
-              created_by,
-              created_at,
-              return_items (
-                id,
-                product_id,
-                product_name,
-                quantity
-              )
-            `),
-          companyId
-        ).order('date', { ascending: false })
+              product_id,
+              product_name,
+              quantity
+            )
+          `)
+          .order('date', { ascending: false })
       );
 
       if (fetchError) throw fetchError;
