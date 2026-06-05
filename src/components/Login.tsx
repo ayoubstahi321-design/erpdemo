@@ -3,7 +3,10 @@ import React, { useState } from 'react';
 import { Logo } from './Logo';
 import { useLanguage } from '../services/i18n';
 import { supabase } from '../services/supabaseClient';
-import { Mail, Lock, ArrowRight, Loader2, Globe, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Loader2, Globe, Eye, EyeOff, Zap } from 'lucide-react';
+
+const DEMO_EMAIL = 'admin@stoqly.com';
+const DEMO_PASSWORD = 'Stoqly2026@';
 
 interface LoginProps {
   onLogin: (user: any) => void;
@@ -78,6 +81,12 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
     }
   };
 
+  const fillDemoCredentials = () => {
+    setEmail(DEMO_EMAIL);
+    setPassword(DEMO_PASSWORD);
+    setError('');
+  };
+
   const languages = [
     { code: 'fr' as const, name: 'Français', flag: '🇫🇷' },
     { code: 'es' as const, name: 'Español', flag: '🇪🇸' },
@@ -139,7 +148,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                       value={resetEmail}
                       onChange={(e) => setResetEmail(e.target.value)}
                       className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 sm:text-sm border-secondary-300 rounded-lg py-2.5 transition-colors duration-200"
-                      placeholder="admin@demo.stoqly.com"
+                      placeholder="admin@stoqly.com"
                     />
                   </div>
                 </div>
@@ -189,6 +198,29 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           </div>
 
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            {/* Demo credentials banner */}
+            <div className="mb-4 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide mb-1">Acceso Demo</p>
+                  <p className="text-sm text-blue-800">
+                    <span className="font-medium">Email:</span> {DEMO_EMAIL}
+                  </p>
+                  <p className="text-sm text-blue-800">
+                    <span className="font-medium">Contraseña:</span> {DEMO_PASSWORD}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={fillDemoCredentials}
+                  className="flex-shrink-0 flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-colors"
+                >
+                  <Zap className="h-3.5 w-3.5" />
+                  Usar
+                </button>
+              </div>
+            </div>
+
             <div className="bg-white py-8 px-4 shadow-large rounded-xl sm:px-10 border border-secondary-200 hover:shadow-glow transition-shadow duration-300">
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>
@@ -208,7 +240,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-slate-300 rounded-lg py-2.5"
-                      placeholder="admin@demo.stoqly.com"
+                      placeholder="admin@stoqly.com"
                     />
                   </div>
                 </div>
