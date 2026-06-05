@@ -934,7 +934,7 @@ const Sales: React.FC<SalesProps> = (props) => {
   };
 
   const handleConfirmQuote = async (quote: Sale) => {
-      if (!confirm('Confirmer ce devis et créer un Bon de Livraison ?')) return;
+      if (!confirm(t('confirm_quote_to_bl'))) return;
       try {
           const [qYear, qMonth] = quote.date.split('T')[0].split('-').map(Number);
           const companyId = quote.companyId || activeCompanyId || currentUser.companyId || null;
@@ -948,7 +948,7 @@ const Sales: React.FC<SalesProps> = (props) => {
   };
 
   const handleDeleteQuote = async (quoteId: string) => {
-      if (!confirm('Supprimer ce presupuesto? Cette action est irréversible.')) return;
+      if (!confirm(t('confirm_delete_quote'))) return;
       try {
           await salesMutations.deleteQuote(quoteId);
           await refreshSales();
@@ -979,14 +979,14 @@ const Sales: React.FC<SalesProps> = (props) => {
                 className="flex items-center justify-center px-4 py-3 sm:py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm font-medium flex-1 sm:flex-none text-sm"
              >
                  <Plus className="w-4 h-4 mr-2" />
-                 {currentUser.role === 'Sales' ? 'Nouveau BL' : t('new_sale')}
+                 {currentUser.role === 'Sales' ? t('new_bl') : t('new_sale')}
              </button>
              <button
                 onClick={() => { setIsQuoteMode(true); setSaleDate(new Date().toISOString().split('T')[0]); setShowModal(true); }}
                 className="flex items-center justify-center px-4 py-3 sm:py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700 shadow-sm font-medium flex-1 sm:flex-none text-sm"
              >
                  <FileText className="w-4 h-4 mr-2" />
-                 Presupuesto
+                 {t('quote_label')}
              </button>
          </div>
       </div>
@@ -995,29 +995,29 @@ const Sales: React.FC<SalesProps> = (props) => {
       {salesRepStats && (
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 text-center">
-            <p className="text-xs text-blue-500 font-medium uppercase tracking-wide">Ce mois</p>
+            <p className="text-xs text-blue-500 font-medium uppercase tracking-wide">{t('stats_this_month')}</p>
             <p className="text-2xl font-bold text-blue-700 mt-1">{salesRepStats.monthCount}</p>
-            <p className="text-xs text-blue-400">BL / FAC</p>
+            <p className="text-xs text-blue-400">{t('stats_bl_fac')}</p>
           </div>
           <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 text-center">
-            <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Vendu</p>
+            <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">{t('stats_sold')}</p>
             <p className="text-lg font-bold text-slate-800 mt-1">{salesRepStats.totalVendido.toLocaleString('fr-MA')} DH</p>
-            <p className="text-xs text-slate-400">total cumulé</p>
+            <p className="text-xs text-slate-400">{t('stats_total_cumul')}</p>
           </div>
           <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 text-center">
-            <p className="text-xs text-emerald-600 font-medium uppercase tracking-wide">Encaissé</p>
+            <p className="text-xs text-emerald-600 font-medium uppercase tracking-wide">{t('collected')}</p>
             <p className="text-lg font-bold text-emerald-700 mt-1">{salesRepStats.totalCobrado.toLocaleString('fr-MA')} DH</p>
-            <p className="text-xs text-emerald-400">réglé</p>
+            <p className="text-xs text-emerald-400">{t('stats_settled')}</p>
           </div>
           <div className="bg-rose-50 border border-rose-100 rounded-xl p-3 text-center">
-            <p className="text-xs text-rose-500 font-medium uppercase tracking-wide">En attente</p>
+            <p className="text-xs text-rose-500 font-medium uppercase tracking-wide">{t('pending')}</p>
             <p className="text-lg font-bold text-rose-700 mt-1">{salesRepStats.totalPendiente.toLocaleString('fr-MA')} DH</p>
-            <p className="text-xs text-rose-400">à encaisser</p>
+            <p className="text-xs text-rose-400">{t('stats_to_collect')}</p>
           </div>
           <div className="bg-violet-50 border border-violet-100 rounded-xl p-3 text-center col-span-2 sm:col-span-1">
-            <p className="text-xs text-violet-500 font-medium uppercase tracking-wide">Clients</p>
+            <p className="text-xs text-violet-500 font-medium uppercase tracking-wide">{t('customers')}</p>
             <p className="text-2xl font-bold text-violet-700 mt-1">{salesRepStats.clientesActivos}</p>
-            <p className="text-xs text-violet-400">actifs</p>
+            <p className="text-xs text-violet-400">{t('stats_active')}</p>
           </div>
         </div>
       )}
@@ -1067,8 +1067,8 @@ const Sales: React.FC<SalesProps> = (props) => {
                     <option value="Paid">{t('paid')}</option>
                     <option value="Partial">{t('partial')}</option>
                     <option value="Unpaid">{t('unpaid')}</option>
-                    <option value="Returned">🔄 {t('returned') || 'Devuelto'}</option>
-                    <option value="Quote">📋 Presupuestos</option>
+                    <option value="Returned">🔄 {t('returned')}</option>
+                    <option value="Quote">📋 {t('quote_list')}</option>
                 </select>
                 <button
                     onClick={handleExportCSV}
@@ -1086,7 +1086,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                             onChange={(e) => setActiveCompany(e.target.value || null)}
                         >
                             {visibleCompanyProfiles.length > 1 && currentUser.role === 'Admin' && (
-                                <option value="">{t('all_companies') || 'Toutes les entreprises'}</option>
+                                <option value="">{t('all_companies')}</option>
                             )}
                             {visibleCompanyProfiles.map(p => (
                                 <option key={p.id} value={p.id}>{p.profileName}</option>
@@ -1139,7 +1139,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                                       {!activeCompanyId && sale.companyId && (
                                         <span className="flex items-center px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs font-medium">
                                           <Building2 className="w-3 h-3 mr-1" />
-                                          {companyProfiles.find(c => c.id === sale.companyId)?.profileName || 'Empresa'}
+                                          {companyProfiles.find(c => c.id === sale.companyId)?.profileName || t('unknown_company')}
                                         </span>
                                       )}
                                   </div>
@@ -1153,14 +1153,14 @@ const Sales: React.FC<SalesProps> = (props) => {
                                       const reste = Math.max(0, sale.totalAmount - sale.amountPaid - (sale.creditedAmount || 0));
                                       return reste > 0.01 ? (
                                           <p className="text-xs font-bold text-orange-600 mt-0.5">
-                                              Reste: {reste.toFixed(2)} <span className="font-normal text-orange-400">{CURRENCY}</span>
+                                              {t('remaining_balance')}: {reste.toFixed(2)} <span className="font-normal text-orange-400">{CURRENCY}</span>
                                           </p>
                                       ) : null;
                                   })()}
                                   <div className="flex items-center justify-end gap-2 mt-1">
                                       {isQuote ? (
                                           <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-violet-100 text-violet-800">
-                                              DEVIS
+                                              {t('status_quote_badge')}
                                           </span>
                                       ) : (
                                       <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${getStatusBadge(sale.paymentStatus)}`}>
@@ -1170,15 +1170,15 @@ const Sales: React.FC<SalesProps> = (props) => {
                                       {/* Return Status Badge */}
                                       {(sale as any).returnStatus === 'full' ? (
                                           <span className="text-xs font-bold px-2 py-0.5 rounded bg-red-600 text-white tracking-wide">
-                                              ANNULÉE
+                                              {t('status_cancelled')}
                                           </span>
                                       ) : (sale as any).returnStatus === 'partial' ? (
                                           <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-orange-100 text-orange-800 flex items-center">
-                                              <Undo2 className="w-3 h-3 mr-1" /> Avoir partiel
+                                              <Undo2 className="w-3 h-3 mr-1" /> {t('partial_credit_note')}
                                           </span>
                                       ) : sale.creditedAmount > 0 ? (
                                           <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 flex items-center">
-                                              <Undo2 className="w-3 h-3 mr-1" /> Avoir
+                                              <Undo2 className="w-3 h-3 mr-1" /> {t('credit_note_short')}
                                           </span>
                                       ) : null}
                                   </div>
@@ -1194,7 +1194,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                                       onClick={() => setViewingDocument({sale, type: 'QUOTE' as any})}
                                       className="flex items-center px-3 py-1.5 bg-white border border-violet-200 text-violet-700 rounded-md text-sm font-medium hover:bg-violet-50 shadow-sm"
                                   >
-                                      <Printer className="w-3 h-3 mr-2" /> PDF Devis
+                                      <Printer className="w-3 h-3 mr-2" /> {t('pdf_quote')}
                                   </button>
                                   {['Admin', 'Manager'].includes(props.currentUser.role) && (
                                   <button
@@ -1211,20 +1211,20 @@ const Sales: React.FC<SalesProps> = (props) => {
                                       }}
                                       className="flex items-center px-3 py-1.5 bg-violet-600 text-white rounded-md text-sm font-medium hover:bg-violet-700 shadow-sm"
                                   >
-                                      <Pencil className="w-3 h-3 mr-2" /> Modifier
+                                      <Pencil className="w-3 h-3 mr-2" /> {t('edit')}
                                   </button>
                                   )}
                                   <button
                                       onClick={() => handleConfirmQuote(sale)}
                                       className="flex items-center px-3 py-1.5 bg-emerald-600 text-white rounded-md text-sm font-medium hover:bg-emerald-700 shadow-sm"
                                   >
-                                      <Check className="w-3 h-3 mr-2" /> Confirmer
+                                      <Check className="w-3 h-3 mr-2" /> {t('confirm_label')}
                                   </button>
                                   <button
                                       onClick={() => handleDeleteQuote(sale.id)}
                                       className="flex items-center px-3 py-1.5 bg-rose-600 text-white rounded-md text-sm font-medium hover:bg-rose-700 shadow-sm"
                                   >
-                                      <Trash2 className="w-3 h-3 mr-2" /> Supprimer
+                                      <Trash2 className="w-3 h-3 mr-2" /> {t('remove')}
                                   </button>
                               </>
                           ) : (
@@ -1266,7 +1266,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                               }}
                               className="flex items-center px-3 py-1.5 bg-amber-500 text-white rounded-md text-sm font-medium hover:bg-amber-600 shadow-sm"
                           >
-                              <FileCheck className="w-3 h-3 mr-2" /> BL → Facture
+                              <FileCheck className="w-3 h-3 mr-2" /> {t('bl_to_invoice')}
                           </button>
                           )}
                           {['Admin', 'Manager', 'Accountant'].includes(props.currentUser.role) && !hasAnyReturn && (
@@ -1284,7 +1284,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                               }}
                               className="flex items-center px-3 py-1.5 rounded-md text-sm font-medium shadow-sm bg-blue-600 text-white hover:bg-blue-700"
                           >
-                              <Pencil className="w-3 h-3 mr-2" /> {t('edit') || 'Modifier'}
+                              <Pencil className="w-3 h-3 mr-2" /> {t('edit')}
                           </button>
                           )}
                           {sale.paymentStatus !== 'Paid' && !isQuote && ['Admin', 'Manager', 'Accountant', 'Sales'].includes(currentUser.role) && (
@@ -1328,22 +1328,22 @@ const Sales: React.FC<SalesProps> = (props) => {
                           {editingSale && editingSale.documentType === 'QUOTE' ? (
                               <span className="flex items-center gap-2">
                                   <Pencil className="w-5 h-5 text-violet-600" />
-                                  Modifier Devis - {editingSale.invoiceNumber || editingSale.id.slice(0, 8)}
+                                  {t('modify_quote')} - {editingSale.invoiceNumber || editingSale.id.slice(0, 8)}
                               </span>
                           ) : editingSale ? (
                               <span className="flex items-center gap-2">
                                   <Pencil className="w-5 h-5 text-blue-600" />
-                                  {t('edit_invoice') || 'Modifier Facture'} - {editingSale.invoiceNumber || editingSale.id.slice(0, 8)}
+                                  {t('edit_invoice')} - {editingSale.invoiceNumber || editingSale.id.slice(0, 8)}
                               </span>
                           ) : isQuoteMode ? (
                               <span className="flex items-center gap-2">
                                   <FileText className="w-5 h-5 text-violet-600" />
-                                  Nouveau Devis
+                                  {t('new_quote')}
                               </span>
                           ) : (
                               <span className="flex items-center gap-2">
                                   <Truck className="w-5 h-5 text-blue-600" />
-                                  Nouveau Bon de Livraison
+                                  {t('new_delivery_note')}
                               </span>
                           )}
                       </h3>
@@ -1418,9 +1418,9 @@ const Sales: React.FC<SalesProps> = (props) => {
                           </div>
                           <div>
                               <label className="block text-sm font-medium text-slate-700 mb-1">
-                                  Date facture
+                                  {t('invoice_date')}
                                   {saleDate && new Date(saleDate).getMonth() !== new Date().getMonth() && (
-                                      <span className="ml-2 text-xs font-normal text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">mois passé</span>
+                                      <span className="ml-2 text-xs font-normal text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">{t('past_month')}</span>
                                   )}
                               </label>
                               <input
@@ -1433,7 +1433,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                           {editingSale && (
                               <div>
                                   <label className="block text-sm font-medium text-slate-700 mb-1">
-                                      N° Facture
+                                      {t('invoice_no')}
                                   </label>
                                   <input
                                       type="text"
@@ -1452,9 +1452,9 @@ const Sales: React.FC<SalesProps> = (props) => {
                               <div className="flex items-center justify-between mb-2">
                                   <span className="text-xs font-bold text-blue-700 uppercase tracking-wide flex items-center">
                                       <History className="w-3 h-3 mr-1" />
-                                      {recentProducts.length > 0 ? t('recent_products') || 'Recientes' : t('frequent_products') || 'Frecuentes'}
+                                      {recentProducts.length > 0 ? t('recent_products') : t('frequent_products')}
                                   </span>
-                                  <span className="text-xs text-blue-500">Ctrl+F para buscar</span>
+                                  <span className="text-xs text-blue-500">{t('ctrl_f_hint')}</span>
                               </div>
                               <div className="flex flex-wrap gap-2">
                                   {(recentProducts.length > 0
@@ -1624,7 +1624,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                                                           ? 'bg-emerald-100 text-emerald-700 border-emerald-300 hover:bg-emerald-200'
                                                           : 'bg-slate-100 text-slate-400 border-slate-200 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-200'
                                                   }`}
-                                                  title={isGift ? 'Quitar gratuidad' : 'Marcar como OFFERT (precio 0)'}
+                                                  title={isGift ? t('remove_gift') : t('mark_as_gift')}
                                               >
                                                   🎁
                                               </button>
@@ -1644,7 +1644,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                                                       value={item.unitPrice}
                                                       onFocus={(e) => e.target.select()}
                                                       onChange={(e) => updateItem(idx, 'unitPrice', parseFloat(e.target.value) || 0)}
-                                                      title="Modificar precio unitario"
+                                                      title={t('edit_unit_price')}
                                                   />
                                                   {isBoxMode && <div className="text-xs text-slate-400 text-center">= {effectiveUnitPrice.toFixed(2)}{t('per_box')}</div>}
                                               </div>
@@ -1721,7 +1721,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                                       <td className={`p-3 text-right font-bold ${isGift ? 'text-emerald-600' : ''}`}>{item.total.toFixed(2)}</td>
                                       <td className="p-3 text-center">
                                           {isLocked ? (
-                                              <span className="text-slate-300" title={t('cannot_remove_original_item') || 'No se puede eliminar - usa devolución'}>
+                                              <span className="text-slate-300" title={t('cannot_remove_original_item')}>
                                                   <Trash2 className="w-4 h-4" />
                                               </span>
                                           ) : (
@@ -1783,7 +1783,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                                                           </div>
                                                           {currentSavings > 0 && (
                                                               <span className={`font-bold ${isMaxTier ? 'text-emerald-700' : 'text-blue-700'}`}>
-                                                                  Ahorro: {currentSavings.toFixed(2)} DH
+                                                                  {t('savings')}: {currentSavings.toFixed(2)} DH
                                                               </span>
                                                           )}
                                                       </div>
@@ -2193,7 +2193,7 @@ const Sales: React.FC<SalesProps> = (props) => {
                                   <tr>
                                       <th className="p-3">{t('product')}</th>
                                       <th className="p-3 text-center">{t('sold')}</th>
-                                      <th className="p-3 text-center">Ya Devuelto</th>
+                                      <th className="p-3 text-center">{t('already_returned')}</th>
                                       <th className="p-3 text-center">{t('return_qty')}</th>
                                   </tr>
                               </thead>

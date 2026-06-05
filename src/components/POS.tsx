@@ -1330,7 +1330,7 @@ const POS: React.FC<POSProps> = ({ products: propsProducts, warehouses: propsWar
                             }`}
                           >
                             <FileText className="w-6 h-6 mb-1" />
-                            <span className="text-xs font-bold">{t('invoice') || 'Facture'}</span>
+                            <span className="text-xs font-bold">{t('invoice')}</span>
                           </button>
                           <button
                             onClick={() => setDocumentType('DELIVERY_NOTE')}
@@ -1341,7 +1341,7 @@ const POS: React.FC<POSProps> = ({ products: propsProducts, warehouses: propsWar
                             }`}
                           >
                             <Truck className="w-6 h-6 mb-1" />
-                            <span className="text-xs font-bold">{t('delivery_note') || 'Bono'}</span>
+                            <span className="text-xs font-bold">{t('delivery_note')}</span>
                           </button>
                         </div>
                         {documentType !== 'TICKET' && (

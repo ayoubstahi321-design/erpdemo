@@ -544,7 +544,7 @@ const Inventory: React.FC<InventoryProps> = (props) => {
                     value={supplierFilter}
                     onChange={(e) => setSupplierFilter(e.target.value)}
                 >
-                    <option value="All">Tous fournisseurs</option>
+                    <option value="All">{t('all_suppliers')}</option>
                     {suppliers.filter(s => s.status === 'Active').map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
                 </select>
               </div>
@@ -552,26 +552,26 @@ const Inventory: React.FC<InventoryProps> = (props) => {
             <button
                 onClick={downloadCSVTemplate}
                 className="hidden md:flex items-center px-3 py-2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 rounded-lg transition-colors text-sm font-medium"
-                title="Descargar plantilla CSV"
+                title={t('download_template')}
             >
                 <FileText className="w-4 h-4 mr-2" />
-                Plantilla
+                {t('download_template')}
             </button>
             <button
                 onClick={() => setShowImportModal(true)}
                 className="hidden md:flex items-center px-3 py-2 bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 rounded-lg transition-colors text-sm font-medium"
-                title="Importer les produits depuis CSV"
+                title={t('import_products')}
             >
                 <Upload className="w-4 h-4 mr-2" />
-                Importer
+                {t('import_products')}
             </button>
             <button
                 onClick={handleExportCSV}
                 className="hidden md:flex items-center px-3 py-2 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg transition-colors text-sm font-medium"
-                title="Exporter les produits en CSV"
+                title={t('export_products')}
             >
                 <Download className="w-4 h-4 mr-2" />
-                Exporter
+                {t('export_products')}
             </button>
             <button
                 onClick={() => setBarcodePrintProducts(paginatedProducts)}
@@ -606,7 +606,7 @@ const Inventory: React.FC<InventoryProps> = (props) => {
                 <thead>
                     <tr className="bg-slate-50 border-b border-slate-200">
                         <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">{t('product_name')} / SKU</th>
-                        <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Fournisseur / Réf.</th>
+                        <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">{t('supplier_ref_col')}</th>
                         <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">{t('pack_size')}</th>
                         <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">{t('price')}</th>
                         <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-center">{t('stock')}</th>
