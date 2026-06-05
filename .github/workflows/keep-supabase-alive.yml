@@ -1,21 +1,45 @@
-name: Keep Supabase Alive
+name: Keep Supabase Alive & Reset Demo Data
 
 on:
   schedule:
-    - cron: '0 10 */3 * *'  # Every 3 days at 10:00 UTC
-  workflow_dispatch:         # Allow manual trigger from GitHub UI
+    - cron: '0 3 */3 * *'  # Every 3 days at 03:00 UTC (low traffic hour)
+  workflow_dispatch:        # Allow manual trigger from GitHub UI
 
 jobs:
-  ping:
+  reset-demo:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase REST API
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Ping Supabase (wake up if paused)
         run: |
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
             "https://hliwfqcsqlcpxmuerypb.supabase.co/rest/v1/" \
             -H "apikey: sb_publishable_GbDr1UParh6bSV_TpSRN2w_rzX_VjN0" \
             -H "Authorization: Bearer sb_publishable_GbDr1UParh6bSV_TpSRN2w_rzX_VjN0")
           echo "Supabase ping status: $STATUS"
+          # Wait for DB to wake up if it was paused
           if [ "$STATUS" != "200" ]; then
-            echo "Warning: Unexpected status $STATUS"
+            echo "DB may be waking up, waiting 30s..."
+            sleep 30
+          fi
+
+      - name: Reset demo data via Supabase SQL API
+        env:
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          SQL=$(cat supabase/migrations/STOQLY_DEMO_DATA_V2.sql)
+          RESPONSE=$(curl -s -w "\n%{http_code}" \
+            -X POST "https://hliwfqcsqlcpxmuerypb.supabase.co/rest/v1/rpc/exec_sql" \
+            -H "apikey: $SUPABASE_SERVICE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" \
+            -H "Content-Type: application/json" \
+            -d "{\"query\": $(echo "$SQL" | jq -Rs .)}")
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          echo "Reset response code: $HTTP_CODE"
+          if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "204" ]; then
+            echo "✅ Demo data reset successfully"
+          else
+            echo "⚠️ Reset via RPC failed (expected if exec_sql not available) — data unchanged"
           fi
