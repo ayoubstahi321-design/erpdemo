@@ -1168,8 +1168,10 @@ const Inventory: React.FC<InventoryProps> = (props) => {
                                                 </div>
                                               </div>
                                               <div className={`mt-2 p-2 rounded-lg flex justify-between items-center ${adjustType === 'INCREASE' ? 'bg-emerald-50' : 'bg-rose-50'}`}>
-                                                <span className={`text-xs ${adjustType === 'INCREASE' ? 'text-emerald-500' : 'text-rose-500'}`}>Total</span>
-                                                <span className={`text-sm font-bold ${adjustType === 'INCREASE' ? 'text-emerald-700' : 'text-rose-700'}`}>{adjustType === 'INCREASE' ? '+' : '-'}{total} uds</span>
+                                                <span className={`text-xs ${adjustType === 'INCREASE' ? 'text-emerald-500' : 'text-rose-500'}`}>{adjustType === 'INCREASE' ? '+' : '-'}{total} uds</span>
+                                                <span className={`text-sm font-bold ${adjustType === 'INCREASE' ? 'text-emerald-700' : 'text-rose-700'}`}>
+                                                  → {formatStock(currentStock + (adjustType === 'INCREASE' ? total : -total), ps)}
+                                                </span>
                                               </div>
                                             </>
                                           );
