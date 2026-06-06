@@ -233,8 +233,9 @@ const Inventory: React.FC<InventoryProps> = (props) => {
       setTransferBoxes(1);
       setTransferLooseUnits(0);
       setIsAdjusting(false);
+      setAdjustWarehouseId(warehouses[0]?.id || '');
       setAdjustBoxes(0);
-      setAdjustLooseUnits(1);
+      setAdjustLooseUnits(0);
       setAdjustType('INCREASE');
       setAdjustReason('');
   };
@@ -367,6 +368,7 @@ const Inventory: React.FC<InventoryProps> = (props) => {
             // an ADJUSTMENT transfer record — ensuring this quick adjustment
             // is visible in the Transfers history and counted by recalibration.
             const delta = adjustType === 'INCREASE' ? effectiveAdjQty : -effectiveAdjQty;
+            const warehouseName = allWarehouses.find(w => w.id === adjustWarehouseId)?.name || adjustWarehouseId;
             await productsHook.updateStock(
               transferringProduct.id,
               adjustWarehouseId,
@@ -376,6 +378,8 @@ const Inventory: React.FC<InventoryProps> = (props) => {
               props.currentUser?.companyId ?? null
             );
             await refreshProducts();
+            const sign = delta > 0 ? '+' : '';
+            toast.success(`${transferringProduct.name} · ${warehouseName}: ${sign}${delta} uds`);
           } else {
             // Fallback to props (localStorage mode) - use onTransfer
             const adjustment: Transfer = {
