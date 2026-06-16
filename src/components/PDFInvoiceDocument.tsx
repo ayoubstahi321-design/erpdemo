@@ -486,18 +486,18 @@ export const PDFInvoiceDocument: React.FC<PDFInvoiceDocumentProps> = ({
                                     <>
                                         <View style={styles.totalRow}>
                                             <Text style={{ color: '#64748B', fontSize: 7 }}>Sous-total brut TTC</Text>
-                                            <Text style={{ color: '#64748B', fontSize: 7 }}>{grossTTC.toFixed(2)} {CURRENCY}</Text>
+                                            <Text style={{ color: '#64748B', fontSize: 7 }}>{grossTTC.toFixed(2)} {currency}</Text>
                                         </View>
                                         {itemRemise > 0.005 && (
                                             <View style={[styles.totalRow, { color: '#DC2626', fontSize: 7 }]}>
                                                 <Text>Remise articles</Text>
-                                                <Text>-{itemRemise.toFixed(2)} {CURRENCY}</Text>
+                                                <Text>-{itemRemise.toFixed(2)} {currency}</Text>
                                             </View>
                                         )}
                                         {globalDiscountTTC > 0.005 && (
                                             <View style={[styles.totalRow, { color: '#DC2626' }]}>
                                                 <Text>Remise Globale{sale.globalDiscountType === 'percentage' ? ` (${sale.globalDiscountValue}%)` : ''}</Text>
-                                                <Text>-{globalDiscountTTC.toFixed(2)} {CURRENCY}</Text>
+                                                <Text>-{globalDiscountTTC.toFixed(2)} {currency}</Text>
                                             </View>
                                         )}
                                         <View style={styles.divider} />
@@ -505,15 +505,15 @@ export const PDFInvoiceDocument: React.FC<PDFInvoiceDocumentProps> = ({
                                 )}
                                 <View style={styles.totalRow}>
                                     <Text>Total H.T.</Text>
-                                    <Text>{finalHT.toFixed(2)} {CURRENCY}</Text>
+                                    <Text>{finalHT.toFixed(2)} {currency}</Text>
                                 </View>
                                 <View style={styles.totalRow}>
                                     <Text>TVA ({Math.round(taxRate * 100)}%)</Text>
-                                    <Text>{finalTVA.toFixed(2)} {CURRENCY}</Text>
+                                    <Text>{finalTVA.toFixed(2)} {currency}</Text>
                                 </View>
                                 <View style={styles.totalRowBold}>
                                     <Text>Total TTC</Text>
-                                    <Text>{finalTTC.toFixed(2)} {CURRENCY}</Text>
+                                    <Text>{finalTTC.toFixed(2)} {currency}</Text>
                                 </View>
                             </View>
                         </View>
@@ -547,12 +547,12 @@ export const PDFInvoiceDocument: React.FC<PDFInvoiceDocumentProps> = ({
                                     <>
                                         <View style={styles.totalRow}>
                                             <Text style={{ color: '#64748B', fontSize: 7 }}>Sous-total brut TTC</Text>
-                                            <Text style={{ color: '#64748B', fontSize: 7 }}>{grossTTC.toFixed(2)} {CURRENCY}</Text>
+                                            <Text style={{ color: '#64748B', fontSize: 7 }}>{grossTTC.toFixed(2)} {currency}</Text>
                                         </View>
                                         {itemRemise > 0.005 && (
                                             <View style={[styles.totalRow, { color: '#DC2626', fontSize: 7 }]}>
                                                 <Text>Remise articles</Text>
-                                                <Text>-{itemRemise.toFixed(2)} {CURRENCY}</Text>
+                                                <Text>-{itemRemise.toFixed(2)} {currency}</Text>
                                             </View>
                                         )}
                                         {globalDiscountTTC > 0.005 && (
@@ -560,7 +560,7 @@ export const PDFInvoiceDocument: React.FC<PDFInvoiceDocumentProps> = ({
                                                 <Text>
                                                     Remise Globale{sale.globalDiscountType === 'percentage' ? ` (${sale.globalDiscountValue}%)` : ''}
                                                 </Text>
-                                                <Text>-{globalDiscountTTC.toFixed(2)} {CURRENCY}</Text>
+                                                <Text>-{globalDiscountTTC.toFixed(2)} {currency}</Text>
                                             </View>
                                         )}
                                         <View style={styles.divider} />
@@ -568,15 +568,15 @@ export const PDFInvoiceDocument: React.FC<PDFInvoiceDocumentProps> = ({
                                 )}
                                 <View style={styles.totalRow}>
                                     <Text>Total H.T.</Text>
-                                    <Text>{finalHT.toFixed(2)} {CURRENCY}</Text>
+                                    <Text>{finalHT.toFixed(2)} {currency}</Text>
                                 </View>
                                 <View style={styles.totalRow}>
                                     <Text>TVA ({Math.round(taxRate * 100)}%)</Text>
-                                    <Text>{finalTVA.toFixed(2)} {CURRENCY}</Text>
+                                    <Text>{finalTVA.toFixed(2)} {currency}</Text>
                                 </View>
                                 <View style={styles.totalRowBold}>
                                     <Text>Total TTC</Text>
-                                    <Text>{finalTTC.toFixed(2)} {CURRENCY}</Text>
+                                    <Text>{finalTTC.toFixed(2)} {currency}</Text>
                                 </View>
                             </View>
                         </View>
@@ -599,11 +599,11 @@ export const PDFInvoiceDocument: React.FC<PDFInvoiceDocumentProps> = ({
                                     <>
                                         <View style={styles.totalRow}>
                                             <Text style={{ color: '#64748B', fontSize: 7 }}>Sous-total brut H.T.</Text>
-                                            <Text style={{ color: '#64748B', fontSize: 7 }}>{grossHT.toFixed(2)} {CURRENCY}</Text>
+                                            <Text style={{ color: '#64748B', fontSize: 7 }}>{grossHT.toFixed(2)} {currency}</Text>
                                         </View>
                                         <View style={[styles.totalRow, { color: '#DC2626', fontSize: 7 }]}>
                                             <Text>Total Remise</Text>
-                                            <Text>-{totalRemiseHT.toFixed(2)} {CURRENCY}</Text>
+                                            <Text>-{totalRemiseHT.toFixed(2)} {currency}</Text>
                                         </View>
                                         <View style={styles.divider} />
                                     </>
@@ -616,36 +616,36 @@ export const PDFInvoiceDocument: React.FC<PDFInvoiceDocumentProps> = ({
                                             Remise Globale
                                             {sale.globalDiscountType === 'percentage' ? ` (${sale.globalDiscountValue}%)` : ''}
                                         </Text>
-                                        <Text>-{sale.globalDiscountAmount.toFixed(2)} {CURRENCY}</Text>
+                                        <Text>-{sale.globalDiscountAmount.toFixed(2)} {currency}</Text>
                                     </View>
                                     <View style={styles.divider} />
                                 </>
                             )}
                             <View style={styles.totalRow}>
                                 <Text>Total H.T.</Text>
-                                <Text>{sale.subtotalAmount.toFixed(2)} {CURRENCY}</Text>
+                                <Text>{sale.subtotalAmount.toFixed(2)} {currency}</Text>
                             </View>
                             <View style={styles.totalRow}>
                                 <Text>TVA ({sale.taxRate * 100}%)</Text>
-                                <Text>{sale.taxAmount.toFixed(2)} {CURRENCY}</Text>
+                                <Text>{sale.taxAmount.toFixed(2)} {currency}</Text>
                             </View>
                             <View style={styles.totalRowBold}>
                                 <Text>Total TTC</Text>
-                                <Text>{sale.totalAmount.toFixed(2)} {CURRENCY}</Text>
+                                <Text>{sale.totalAmount.toFixed(2)} {currency}</Text>
                             </View>
                             {(sale.creditedAmount || 0) > 0 && (
                                 <View style={[styles.totalRow, { color: '#DC2626', fontSize: 7 }]}>
                                     <Text>Avoirs / Retours</Text>
-                                    <Text>-{(sale.creditedAmount || 0).toFixed(2)} {CURRENCY}</Text>
+                                    <Text>-{(sale.creditedAmount || 0).toFixed(2)} {currency}</Text>
                                 </View>
                             )}
                             <View style={styles.totalRow}>
                                 <Text>Déjà réglé</Text>
-                                <Text style={{ color: '#059669' }}>{sale.amountPaid.toFixed(2)} {CURRENCY}</Text>
+                                <Text style={{ color: '#059669' }}>{sale.amountPaid.toFixed(2)} {currency}</Text>
                             </View>
                             <View style={[styles.totalRow, { fontWeight: 'bold', fontSize: 9 }]}>
                                 <Text>Reste à Payer</Text>
-                                <Text>{remainingBalance.toFixed(2)} {CURRENCY}</Text>
+                                <Text>{remainingBalance.toFixed(2)} {currency}</Text>
                             </View>
                         </View>
                     </View>
@@ -681,7 +681,7 @@ export const PDFInvoiceDocument: React.FC<PDFInvoiceDocumentProps> = ({
                             <View style={{ alignItems: 'flex-end' }}>
                                 <Text style={{ fontSize: 7, color: '#475569' }}>Vous avez économisé</Text>
                                 <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#16A34A' }}>
-                                    {volumeSavingsTTC.toFixed(2)} {CURRENCY}
+                                    {volumeSavingsTTC.toFixed(2)} {currency}
                                 </Text>
                             </View>
                         </View>
@@ -752,7 +752,7 @@ export const PDFInvoiceDocument: React.FC<PDFInvoiceDocumentProps> = ({
                                         {details.filter(Boolean).join(' • ') || '-'}
                                     </Text>
                                     <Text style={[styles.paymentTableCellBold, styles.payCol4, { color: '#059669' }]}>
-                                        {payment.amount.toFixed(2)} {CURRENCY}
+                                        {payment.amount.toFixed(2)} {currency}
                                     </Text>
                                 </View>
                             );
