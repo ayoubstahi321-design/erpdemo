@@ -10,7 +10,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "vite",
-  "public": true,
   "cleanUrls": false,
   "trailingSlash": false,
   "crons": [
